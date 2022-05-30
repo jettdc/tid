@@ -63,16 +63,15 @@ func TransformImage(pxs [][]Pixel, termSize Dimensions) [][]Pixel {
 		imgHeight / xScale,
 	}
 
-	fmt.Println(terminalImgDisplayDim.Height/4, terminalImgDisplayDim.Height)
-	newPixels := make([][]Pixel, terminalImgDisplayDim.Height/4)
+	newPixels := make([][]Pixel, terminalImgDisplayDim.Height/2+1)
 	for i := range newPixels {
 		newPixels[i] = make([]Pixel, terminalImgDisplayDim.Width)
 	}
 
 	// Every other row
-	for row := 0; row < int(math.Floor(float64(terminalImgDisplayDim.Height)/2))-1; row += 2 {
-		lowerYBound := row * xScale * 2
-		upperYBound := int(math.Min(float64(row*xScale*2+(xScale*2)), float64(imgHeight*2)))
+	for row := 0; row < int(math.Floor(float64(terminalImgDisplayDim.Height))); row += 2 {
+		lowerYBound := row * xScale
+		upperYBound := int(math.Min(float64(row*xScale+(xScale*2)), float64(imgHeight)))
 
 		for col := 0; col < terminalImgDisplayDim.Width; col++ {
 			lowerXBound := col * xScale
@@ -96,7 +95,7 @@ func getGroup(pxs [][]Pixel, lowerY int, upperY int, lowerX int, upperX int) [][
 	for i := range group {
 		group[i] = make([]Pixel, xRange)
 	}
-
+	//fmt.Println(lowerX, xRange, lowerY, yRange)
 	for i := 0; i < yRange; i++ {
 		for j := 0; j < xRange; j++ {
 			group[i][j] = pxs[lowerY+i][lowerX+j]
