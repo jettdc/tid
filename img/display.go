@@ -45,8 +45,6 @@ func getPixelForBlock(pxs [][]Pixel) Pixel {
 // On monospace font, we treat each character slot as a 2x1 matrix of pixels, meaning that if we
 // don't want the image to look stretched out, we must combine y pixels to characters, 2 pixels per character
 func TransformImage(pxs [][]Pixel, termSize Dimensions) [][]Pixel {
-	fmt.Println("TERM", termSize)
-
 	imgHeight := len(pxs)
 	imgWidth := len(pxs[0])
 
@@ -78,8 +76,6 @@ func TransformImage(pxs [][]Pixel, termSize Dimensions) [][]Pixel {
 			newPixels[(row / 2)][col] = getPixelForBlock(pxGroup)
 		}
 	}
-
-	fmt.Println(len(newPixels[0]), len(newPixels))
 
 	return newPixels
 }
