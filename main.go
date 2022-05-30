@@ -12,8 +12,6 @@ func main() {
 		log.Fatal("Could not load image. Error:", err.Error())
 	}
 
-	fmt.Println(len(pixels), len(pixels[0]))
-
 	termSize := img.GetTerminalDim()
 
 	transformed := img.TransformImage(pixels, termSize)

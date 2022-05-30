@@ -107,6 +107,7 @@ func getGroup(pxs [][]Pixel, lowerY int, upperY int, lowerX int, upperX int) [][
 }
 
 func PrintPixels(pxs [][]Pixel) {
+	fmt.Println("\033[2J")
 	for _, pxRow := range pxs {
 		fmt.Print("\n")
 		for _, px := range pxRow {
