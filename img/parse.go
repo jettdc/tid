@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"image/jpeg"
 	"image/png"
 	"io"
 	"os"
@@ -18,6 +19,8 @@ type Pixel struct {
 
 func init() {
 	image.RegisterFormat("png", "png", png.Decode, png.DecodeConfig)
+	image.RegisterFormat("jpeg", "jpeg", jpeg.Decode, jpeg.DecodeConfig)
+	image.RegisterFormat("jpg", "jpg", jpeg.Decode, jpeg.DecodeConfig)
 }
 
 func LoadImage(path string) ([][]Pixel, error) {

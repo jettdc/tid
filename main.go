@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"github.com/jettdc/tid/img"
 	"log"
+	"os"
 )
 
 func main() {
-	pixels, err := img.LoadImage("./testpng.png")
+	path := os.Args[1]
+
+	pixels, err := img.LoadImage(path)
 	if err != nil {
 		log.Fatal("Could not load image. Error:", err.Error())
 	}
