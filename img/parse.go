@@ -47,7 +47,6 @@ func imageTypeAccepted(path string) bool {
 	return true
 }
 
-// Get the bi-dimensional pixel array
 func getPixels(file io.Reader) ([][]Pixel, error) {
 	img, _, err := image.Decode(file)
 

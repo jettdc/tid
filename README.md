@@ -1,5 +1,5 @@
 # tid
-Have you ever wanted to display a completely illegible image in your terminal? Now you can!
+Have you ever wanted to display a completely illegible and unbelievably pixelated image in your terminal? Now you can!
 
 tid (terminal image display) is a go library for printing images to the terminal. The package currently supports png and jpg.
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/jettdc/tid/img"
 	"log"
 	"os"
@@ -16,10 +15,7 @@ func main() {
 	}
 
 	termSize := img.GetTerminalDim()
-
 	transformed := img.TransformImage(pixels, termSize)
-
-	fmt.Println("TSIZE", len(transformed), len(transformed[0]))
 
 	img.PrintPixels(transformed)
 }

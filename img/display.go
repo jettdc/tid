@@ -13,18 +13,15 @@ type Dimensions struct {
 	Height int
 }
 
-type ScaleGroup struct {
-	Pixels []Pixel
-}
-
-func (sg *ScaleGroup) addSlice(s []Pixel) {
-	for i := 0; i < len(s); i++ {
-		sg.Pixels = append(sg.Pixels, s[i])
+func PrintPixels(pxs [][]Pixel) {
+	fmt.Println("\033[2J")
+	for _, pxRow := range pxs {
+		fmt.Print("\n")
+		for _, px := range pxRow {
+			color.Print(fmt.Sprintf("<bg=%d,%d,%d> </>", px.R, px.G, px.B))
+		}
 	}
-}
-
-func (sg *ScaleGroup) getAvgPixel() Pixel {
-	return sg.Pixels[0]
+	fmt.Print("\n")
 }
 
 // Terminal dimensions in characters
@@ -41,12 +38,12 @@ func GetTerminalDim() Dimensions {
 	return Dimensions{width, height}
 }
 
-func interpolatePixels(pxs [][]Pixel) Pixel {
+func getPixelForBlock(pxs [][]Pixel) Pixel {
 	return pxs[len(pxs)/2][len(pxs[0])/2]
 }
 
 // On monospace font, we treat each character slot as a 2x1 matrix of pixels, meaning that if we
-// don't want the image to look stretched out, we must combine y pixels
+// don't want the image to look stretched out, we must combine y pixels to characters, 2 pixels per character
 func TransformImage(pxs [][]Pixel, termSize Dimensions) [][]Pixel {
 	fmt.Println("TERM", termSize)
 
@@ -78,7 +75,7 @@ func TransformImage(pxs [][]Pixel, termSize Dimensions) [][]Pixel {
 			upperXBound := int(math.Min(float64(col*xScale+xScale), float64(imgWidth)))
 
 			pxGroup := getGroup(pxs, lowerYBound, upperYBound, lowerXBound, upperXBound)
-			newPixels[(row / 2)][col] = interpolatePixels(pxGroup)
+			newPixels[(row / 2)][col] = getPixelForBlock(pxGroup)
 		}
 	}
 
@@ -95,7 +92,7 @@ func getGroup(pxs [][]Pixel, lowerY int, upperY int, lowerX int, upperX int) [][
 	for i := range group {
 		group[i] = make([]Pixel, xRange)
 	}
-	//fmt.Println(lowerX, xRange, lowerY, yRange)
+
 	for i := 0; i < yRange; i++ {
 		for j := 0; j < xRange; j++ {
 			group[i][j] = pxs[lowerY+i][lowerX+j]
@@ -103,15 +100,4 @@ func getGroup(pxs [][]Pixel, lowerY int, upperY int, lowerX int, upperX int) [][
 	}
 
 	return group
-}
-
-func PrintPixels(pxs [][]Pixel) {
-	fmt.Println("\033[2J")
-	for _, pxRow := range pxs {
-		fmt.Print("\n")
-		for _, px := range pxRow {
-			color.Print(fmt.Sprintf("<bg=%d,%d,%d> </>", px.R, px.G, px.B))
-		}
-	}
-	fmt.Print("\n")
 }
