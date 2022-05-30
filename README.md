@@ -1,5 +1,11 @@
 # tid
-tid (terminal image display) is a go library for printing images to the terminal.
+Have you ever wanted to display a completely illegible image in your terminal? Now you can!
+
+tid (terminal image display) is a go library for printing images to the terminal. The package currently supports png and jpg.
+
+## Usage
+- Use with an image path as a command line argument
+  - `go run main.go <path-to-image>`
 
 ## Example
 
